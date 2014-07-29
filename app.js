@@ -32,8 +32,8 @@ app.get('/posts/new', function(req, res) {
 });
 
 app.post('/posts', function(req, res) {
-	var newPost = req.body;
-	console.log(newPost)
+	var newPost = req.body.post;
+	console.log("newPost :", newPost)
 
 	db.author.find(1).success(function(author){
     var post = db.post.build({title: newPost.title, content: newPost.content, authorId: newPost.authorId})
@@ -41,7 +41,7 @@ app.post('/posts', function(req, res) {
       .success(function(author){
         post.save();
        console.log("Author: ", author);
-       res.render('index');
+       res.redirect('/posts');
     })
 	});
 	
