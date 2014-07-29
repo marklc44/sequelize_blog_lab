@@ -7,6 +7,12 @@ var express = require('express'),
 var app = express();
 
 app.set('view engine', 'ejs');
+app.set('layout', 'layout');
+app.use(express.static(__dirname + '/public'));
+
+// Middleware
+app.use(expressLayouts);
+app.use(bodyParser.urlencoded());
 
 app.get('/', function(req, res) {
 	res.send('Hello world!');
@@ -16,8 +22,30 @@ app.get('/posts', function(req, res) {
 	db.post.findAll().success(function(posts) {
 		res.render('index', {posts: posts});
 	})
-	
 });
+
+app.get('/posts/new', function(req, res) {
+	// get authors for drop down select
+	db.author.findAll().success(function(authors) {
+		res.render('new', {authors: authors});
+	});
+});
+
+app.post('/posts', function(req, res) {
+	var newPost = req.body;
+	console.log(newPost)
+
+	db.author.find(1).success(function(author){
+    var post = db.post.build({title: newPost.title, content: newPost.content, authorId: newPost.authorId})
+    author.setPosts([post])
+      .success(function(author){
+        post.save();
+       console.log("Author: ", author);
+       res.render('index');
+    })
+	});
+	
+})
 
 app.get('/posts/:id', function(req, res) {
 	db.post.find(req.params.id).success(function(post) {
@@ -25,21 +53,14 @@ app.get('/posts/:id', function(req, res) {
 	});
 });
 
-app.
+
 
 // db.author.create({name: 'John Doe'})
 // 	.success(function(author) {
 // 		console.log("Author: ", author);
 // 	});
 
-// db.author.find(1).success(function(author){
-//     var post = db.post.build({title: "First Post", content: "lorem ipsum", authorId: 1})
-//     author.setPosts([post])
-//       .success(function(author){
-//         post.save();
-//        console.log("Author: ", author);
-//     })
-// });
+
 
 
 app.listen(3000, function() {
