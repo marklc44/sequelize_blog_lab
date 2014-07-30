@@ -6,6 +6,15 @@
 	<link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-	<%- body %>
+	<header class="page-header">
+		<div class="logo">Super Cool Blog</div>
+		<ul class="nav">
+			<li><a href="/posts">Posts</a></li>
+			<li><a href="/posts/new">Add a Post</a></li>
+		</ul>
+	</header>
+	<div class="content-wrapper">
+		<%- body %>
+	</div>
 </body>
 </html>

@@ -1,6 +1,44 @@
+* {
+	box-sizing: border-box;
+}
+body {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+}
 input, textarea, label, select {
 	display: block;
 }
 input, textarea, select {
 	margin-bottom: 1em;
+}
+.page-header {
+	width: 100%;
+	overflow: hidden;
+	padding: 1em;
+}
+.logo {
+	float: left;
+	max-width: 25%;
+	margin-right: 2em;
+}
+
+.nav, .results-list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	text-indent: none;
+}
+.nav {
+	float: left;
+	max-width: 75%;
+}
+
+.nav li {
+	display: inline-block;
+	margin-right: 2em;
+}
+.content-wrapper {
+	width: 80%;
+	margin: 0 auto;
 }

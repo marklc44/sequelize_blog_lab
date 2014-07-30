@@ -22,6 +22,7 @@
     "express": "^4.7.2",
     "express-ejs-layouts": "^1.1.0",
     "lodash": "^2.4.1",
+    "method-override": "^2.1.2",
     "pg": "^3.4.0",
     "sequelize": "^1.7.9"
   }

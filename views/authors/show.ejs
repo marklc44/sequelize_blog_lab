@@ -1,0 +1,7 @@
+<h2><%= author.dataValues.name %></h2>
+
+<ul class="results-list">
+	<% posts.forEach(function(post) { %>
+		<li><a href="/posts/<%= post.dataValues.id %>"><%= post.dataValues.title %></a></li>
+	<% }) %>
+</ul>

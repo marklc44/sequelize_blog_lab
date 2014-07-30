@@ -43,21 +43,41 @@ app.post('/posts', function(req, res) {
        	res.redirect('/posts');
     })
 	});
-	
-})
+});
 
 app.get('/posts/:id', function(req, res) {
+	var currPost;
 	db.post.find(req.params.id).success(function(post) {
-		res.render('show', {post: post});
+		currPost = post;
+		db.author.find(post.authorId).success(function(author) {
+			res.render('show', {post: currPost, author: author});
+		});
+			
 	});
 });
 
+app.get('/authors/:id', function(req, res) {
+	var id = req.params.id;
+
+	db.author.find(id).success(function(author) {
+		db.post.findAndCountAll({
+			where: {authorId: author.dataValues.id}
+		})
+			.success(function(posts) {
+				console.log('/authors posts: ', posts);
+				res.render('authors/show', {
+					author: author,
+					posts: posts.rows
+				});
+			});
+	});
+});
+
+// app.put('/posts/:id/edit', function(req, res) {});
+
+// app.destroy('/posts/:id', function(req, res) {});
 
 
-// db.author.create({name: 'John Doe'})
-// 	.success(function(author) {
-// 		console.log("Author: ", author);
-// 	});
 
 
 
