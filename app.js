@@ -16,15 +16,13 @@ app.use(expressLayouts);
 app.use(bodyParser.urlencoded());
 app.use(methodOverride('_method'));
 
-console.log(methodOverride);
-
 app.get('/', function(req, res) {
 	res.send('Hello world!');
 });
 
 app.get('/posts', function(req, res) {
-	db.post.findAll({include: [db.author]}).success(function(posts) {
-
+	db.post.findAll({order: 'title DESC', include: [db.author]}).success(function(posts) {
+		console.log('Get Posts Join: ', posts);
 		res.render('index', {posts: posts});
 	})
 });
@@ -38,7 +36,6 @@ app.get('/posts/new', function(req, res) {
 
 app.post('/posts', function(req, res) {
 	var newPost = req.body.post;
-	console.log("newPost :", newPost)
 
 	db.author.find(newPost.authorId).success(function(author){
     var post = db.post.build({title: newPost.title, content: newPost.content, authorId: author.id})
@@ -69,7 +66,6 @@ app.get('/authors/:id', function(req, res) {
 			where: {authorId: author.dataValues.id}
 		})
 			.success(function(posts) {
-				console.log('/authors posts: ', posts);
 				res.render('authors/show', {
 					author: author,
 					posts: posts.rows
@@ -96,9 +92,7 @@ app.get('/posts/:id/edit', function(req, res) {
 app.put('/posts/:id', function(req, res) {
 	var id = req.params.id;
 	var newPost = req.body;
-	console.log('Edit params: ', newPost.post.title)
 	db.post.find(id).success(function(post) {
-		console.log('Post to Update: ', post.dataValues.title)
 		post.updateAttributes({title: newPost.post.title, content: newPost.post.content, authorId: newPost.post.authorId})
 			.success(function(post) {
 				res.redirect('/posts/');

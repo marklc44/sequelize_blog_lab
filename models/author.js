@@ -1,7 +1,9 @@
 
 function Author(sequelize, DataTypes) {
 	var Author =  sequelize.define('author', {
-		name: DataTypes.STRING
+		name: DataTypes.STRING,
+		createdAt: DataTypes.DATE,
+		updatedAt: DataTypes.DATE
 	},
 	{
 		// define your own static methods
