@@ -1,4 +1,4 @@
-<h2>New Post: </h2>
+<h2>Edit Post: </h2>
 
 <form class="stacked" action="/posts" method="post">
 	<label for="post-author">Author:</label>
@@ -12,8 +12,8 @@
 
 	</select>
 	<label for="post-title">Title:</label>
-	<input type="text" name="post[title]" id="post-title" placeholder="Post title">
+	<input type="text" name="post[title]" id="post-title" value="<%= post.dataValues.title %>" placeholder="Post title">
 	<label for="post-content"></label>
-	<textarea name="post[content]" id="post-content" cols="30" rows="10"></textarea>
+	<textarea name="post[content]" value="<%= post.dataValues.content %>" id="post-content" cols="30" rows="10"></textarea>
 	<input type="submit" value="Publish">
 </form>

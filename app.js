@@ -2,7 +2,8 @@ var express = require('express'),
 		ejs = require('ejs'),
 		expressLayouts = require('express-ejs-layouts'),
 		bodyParser = require('body-parser')
-		db = require('./models/index.js');
+		db = require('./models/index.js')
+		methodOverride = require('method-override');
 
 var app = express();
 
@@ -13,6 +14,9 @@ app.use(express.static(__dirname + '/public'));
 // Middleware
 app.use(expressLayouts);
 app.use(bodyParser.urlencoded());
+app.use(methodOverride('_method'));
+
+console.log(methodOverride);
 
 app.get('/', function(req, res) {
 	res.send('Hello world!');
@@ -73,9 +77,37 @@ app.get('/authors/:id', function(req, res) {
 	});
 });
 
-// app.put('/posts/:id/edit', function(req, res) {});
+app.get('/posts/:id/edit', function(req, res) {
+	var id = req.params.id;
+	var authorList;
 
-// app.destroy('/posts/:id', function(req, res) {});
+	db.author.findAll().success(function(authors) {
+		authorList = authors;
+		db.post.find(id).success(function(post) {
+		// do update
+			res.render('edit', {post: post, authors: authors});
+
+		});
+	});
+	
+});
+
+app.put('/posts/:id', function(req, res) {
+	var id = req.params.id;
+
+	
+});
+
+app.delete('/posts/:id', function(req, res) {
+	var id = req.params.id;
+	var currAuthor;
+	db.post.find(id).success(function(post) {
+		currAuthor = post.dataValues.authorId;
+		post.destroy().success(function() {
+			res.redirect('/authors/' + currAuthor);
+		});
+	});
+});
 
 
 
