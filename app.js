@@ -23,7 +23,8 @@ app.get('/', function(req, res) {
 });
 
 app.get('/posts', function(req, res) {
-	db.post.findAll().success(function(posts) {
+	db.post.findAll({include: [db.author]}).success(function(posts) {
+
 		res.render('index', {posts: posts});
 	})
 });

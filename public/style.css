@@ -13,6 +13,7 @@ body {
 	float: left;
 	margin-right: 2em;
 	font-size: 2em;
+	line-height: .9em;
 }
 .nav {
 	list-style-type: none;
@@ -55,8 +56,16 @@ body {
 	background: #eee;
 	margin-bottom: 1em;
 }
+.results li h3 {
+	width: 60%;
+	margin: 0;
+	float: left;
+}
 .results li .buttons {
 	width: 20%;
+}
+.results li .buttons a {
+	float: left;
 }
 .pull-left {
 	float: left;

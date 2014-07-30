@@ -8,7 +8,7 @@ function Author(sequelize, DataTypes) {
 		classMethods: {
 			associate: function(db) {
 				// hasMany association here
-				Author.hasMany(db.post, {as: 'Posts'});
+				Author.hasMany(db.post);
 			}
 		}
 	});
