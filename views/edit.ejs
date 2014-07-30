@@ -1,6 +1,7 @@
+
 <h2>Edit Post: </h2>
 
-<form class="stacked" action="/posts" method="post">
+<form class="stacked" action="/posts/<%= post.dataValues.id %>?_method=put" method="post">
 	<label for="post-author">Author:</label>
 	<select name="post[authorId]" id="post-author">
 
@@ -15,5 +16,5 @@
 	<input type="text" name="post[title]" id="post-title" value="<%= post.dataValues.title %>" placeholder="Post title">
 	<label for="post-content"></label>
 	<textarea name="post[content]" value="<%= post.dataValues.content %>" id="post-content" cols="30" rows="10"></textarea>
-	<input type="submit" value="Publish">
+	<input type="submit" value="Update">
 </form>

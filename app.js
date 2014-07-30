@@ -85,7 +85,7 @@ app.get('/posts/:id/edit', function(req, res) {
 		authorList = authors;
 		db.post.find(id).success(function(post) {
 		// do update
-			res.render('edit', {post: post, authors: authors});
+			res.render('edit', {post: post, authors: authors });
 
 		});
 	});
@@ -94,7 +94,15 @@ app.get('/posts/:id/edit', function(req, res) {
 
 app.put('/posts/:id', function(req, res) {
 	var id = req.params.id;
-
+	var newPost = req.body;
+	console.log('Edit params: ', newPost.post.title)
+	db.post.find(id).success(function(post) {
+		console.log('Post to Update: ', post.dataValues.title)
+		post.updateAttributes({title: newPost.post.title, content: newPost.post.content, authorId: newPost.post.authorId})
+			.success(function(post) {
+				res.redirect('/posts/');
+			});
+	});
 	
 });
 
