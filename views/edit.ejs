@@ -4,9 +4,13 @@
 <form class="stacked" action="/posts/<%= post.dataValues.id %>?_method=put" method="post">
 	<label for="post-author">Author:</label>
 	<select name="post[authorId]" id="post-author">
-
+	
 		<% authors.forEach(function(author) { %>
-		<option value="<%= author.dataValues.id %>">
+		<option value="<%= author.dataValues.id %>"
+			<% if (author.dataValues.id === post.dataValues.authorId) { %>
+				selected
+			<% } %>
+			>
 			<%= author.dataValues.name %>
 		</option>
 		<% }) %>

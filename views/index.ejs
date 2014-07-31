@@ -3,7 +3,7 @@
 	<ul class="results">
 		<% posts.forEach(function(post) { %>
 		<li><a href="/posts/<%= post.dataValues.id %>"><%= post.dataValues.title %></a>
-			<p>By: <%= post.dataValues.author.name %></p>
+			<p>By: <a href="/authors/<%= post.dataValues.authorId %>"><%= post.dataValues.author.name %></a></p>
 		</li>
 		<% }) %>
 	</ul>

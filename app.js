@@ -16,15 +16,45 @@ app.use(expressLayouts);
 app.use(bodyParser.urlencoded());
 app.use(methodOverride('_method'));
 
+
+
 app.get('/', function(req, res) {
-	res.send('Hello world!');
+	res.render('authors/index');
+});
+
+app.get('/login', function(req, res) {
+	res.render('authors/login', {username: ''});
+});
+
+app.get('/signup', function(req, res) {
+	res.render('authors/signup', {username: '', name: ''});
+});
+
+app.post('/signup', function(req, res) {
+	db.author.createNewUser(req.body.username, req.body.password, req.body.name,
+		function(error) {
+			res.render('login', {username: req.body.username});
+		},
+		function(author) {
+			res.redirect('/login');
+		})
+});
+
+app.post('/login', function(req, res) {
+	db.author.authorize(req.body.username, req.body.password,
+		function(error) {
+			res.render('login', {username: req.body.username});
+		},
+		function(author) {
+			res.redirect('/authors/' + author.dataValues.id);
+		});
 });
 
 app.get('/posts', function(req, res) {
 	db.post.findAll({order: 'title DESC', include: [db.author]}).success(function(posts) {
 		console.log('Get Posts Join: ', posts);
 		res.render('index', {posts: posts});
-	})
+	});
 });
 
 app.get('/posts/new', function(req, res) {
@@ -43,7 +73,7 @@ app.post('/posts', function(req, res) {
       .success(function(author){
         post.save();
        	res.redirect('/posts');
-    })
+    });
 	});
 });
 
@@ -53,8 +83,7 @@ app.get('/posts/:id', function(req, res) {
 		currPost = post;
 		db.author.find(post.authorId).success(function(author) {
 			res.render('show', {post: currPost, author: author});
-		});
-			
+		});	
 	});
 });
 

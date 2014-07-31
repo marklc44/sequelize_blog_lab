@@ -23,11 +23,6 @@ Object.keys(db).forEach(function(modelName) {
   }
 })
 
-// Associations
-// db.author.hasMany(db.post, {as: 'Posts'});
-// db.post.belongsTo(db.author);
-
-
 module.exports = lodash.extend({
   sequelize: sequelize,
   Sequelize: Sequelize
